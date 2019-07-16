@@ -28,8 +28,6 @@ public class FXMLventanaController implements Initializable {
     @FXML
     private TableColumn<?, ?> relojColumn;
     @FXML
-    private TableColumn<?, ?> rndLlegadaColumn;
-    @FXML
     private TableColumn<?, ?> tiempoLlegadaColumn;
     @FXML
     private TableColumn<?, ?> proximaLlegadaColumn;
@@ -101,6 +99,10 @@ public class FXMLventanaController implements Initializable {
     private TableColumn<?, ?> maxTiempoSistemaColumn;
     @FXML
     private Button btnClientes;
+    @FXML
+    private TableColumn<?, ?> rndLlegada1Column;
+    @FXML
+    private TableColumn<?, ?> rndLlegada2Column;
 
     /**
      * Initializes the controller class.
