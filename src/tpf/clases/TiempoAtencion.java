@@ -27,6 +27,10 @@ public class TiempoAtencion {
         }
         return instance;
     }
+    
+    private TiempoAtencion(){
+        
+    }
 
     public double getRnd() {
         return rnd;

@@ -17,6 +17,11 @@ public class Gomeria implements SimuladorServicio{
     private double inicioAtencion;
     private double finAtencion;
     
+    public Gomeria(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+    }
+    
     public Gomeria(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;

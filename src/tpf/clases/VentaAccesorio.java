@@ -17,6 +17,11 @@ public class VentaAccesorio implements SimuladorServicio{
     private double inicioAtencion;
     private double finAtencion;
     
+    public VentaAccesorio(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+    }
+    
     public VentaAccesorio(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
