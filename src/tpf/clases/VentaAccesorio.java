@@ -16,15 +16,18 @@ public class VentaAccesorio implements SimuladorServicio{
     
     private double inicioAtencion;
     private double finAtencion;
+    private boolean ocupado;
     
     public VentaAccesorio(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;
+        this.ocupado = false;
     }
     
     public VentaAccesorio(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
+        this.ocupado = false;
     }
 
     public double getInicioAtencion() {
@@ -62,6 +65,12 @@ public class VentaAccesorio implements SimuladorServicio{
         tiempo.setFinAtencion(this.finAtencion); 
     }
     
-    
+    public boolean estaOcupado(){
+        return this.ocupado;
+    }
+
+    public void ocupar(){
+        this.ocupado = true;
+    }
     
 }

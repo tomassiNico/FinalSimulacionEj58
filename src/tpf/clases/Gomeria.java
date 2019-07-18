@@ -16,15 +16,18 @@ public class Gomeria implements SimuladorServicio{
     
     private double inicioAtencion;
     private double finAtencion;
-    
+    private boolean ocupado;
+ 
     public Gomeria(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;
+        this.ocupado = false;
     }
     
     public Gomeria(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
+        this.ocupado = true;
     }
 
     public double getInicioAtencion() {
@@ -62,7 +65,13 @@ public class Gomeria implements SimuladorServicio{
         tiempo.setFinAtencion(this.finAtencion); 
                 
     }
-
     
+    public boolean estaOcupado(){
+        return this.ocupado;
+    }
+
+    public void ocupar(){
+        this.ocupado = true;
+    }
     
 }
