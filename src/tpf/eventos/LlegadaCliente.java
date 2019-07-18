@@ -28,7 +28,7 @@ public class LlegadaCliente {
         this.proximaLlegada = -1;
         // pasamos los 24 segundos y los 23 segundo a minutos 
         // para el generador de distr normal
-        this.generadorNormal = new Normal(0.4, 0.3833333);
+        this.generadorNormal = new Normal((24.0/60.0), (23.0/60.0));
     }
 
     public double getRndLlegada1() {

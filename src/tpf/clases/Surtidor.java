@@ -5,11 +5,14 @@
  */
 package tpf.clases;
 
+import distribuciones.Uniforme;
+import java.util.Random;
+
 /**
  *
  * @author xtoma
  */
-public class Surtidor {
+public class Surtidor implements SimuladorServicio{
     
     private double inicioAtencion;
     private double finAtencion;
@@ -33,6 +36,25 @@ public class Surtidor {
 
     public void setFinAtencion(double finAtencion) {
         this.finAtencion = finAtencion;
+    }
+
+    @Override
+    public void calcularTiempoAtencion(double reloj) {
+        String sevicio = "Gasolinera";
+        
+        Random generadorRnd = new Random();
+        double rnd = generadorRnd.nextDouble();
+        
+        Uniforme distUni = new Uniforme(10.0, 26.0);
+        double tiempoAtencion = distUni.generarNumero(rnd);
+        this.inicioAtencion = reloj;
+        this.finAtencion =  reloj + tiempoAtencion;
+        
+        TiempoAtencion tiempo = TiempoAtencion.getInstance();
+        tiempo.setRnd(rnd);
+        tiempo.setServicio(sevicio);
+        tiempo.setTiempoAtencion(tiempoAtencion);
+        tiempo.setFinAtencion(this.finAtencion); 
     }
     
     

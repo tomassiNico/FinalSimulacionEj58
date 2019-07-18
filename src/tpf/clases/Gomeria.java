@@ -5,11 +5,14 @@
  */
 package tpf.clases;
 
+import distribuciones.Uniforme;
+import java.util.Random;
+
 /**
  *
  * @author xtoma
  */
-public class Gomeria {
+public class Gomeria implements SimuladorServicio{
     
     private double inicioAtencion;
     private double finAtencion;
@@ -34,7 +37,27 @@ public class Gomeria {
     public void setFinAtencion(double finAtencion) {
         this.finAtencion = finAtencion;
     }
-    
+
+    @Override
+    public void calcularTiempoAtencion(double reloj) {
+        String sevicio = "Gomeria";
+        
+        Random generadorRnd = new Random();
+        double rnd = generadorRnd.nextDouble();
+        
+        Uniforme distUni = new Uniforme((45/60), (55/60));
+        double tiempoAtencion = distUni.generarNumero(rnd);
+        this.inicioAtencion = reloj;
+        this.finAtencion =  reloj + tiempoAtencion;
+        
+        TiempoAtencion tiempo = TiempoAtencion.getInstance();
+        tiempo.setRnd(rnd);
+        tiempo.setServicio(sevicio);
+        tiempo.setTiempoAtencion(tiempoAtencion);
+        tiempo.setFinAtencion(this.finAtencion); 
+                
+    }
+
     
     
 }
