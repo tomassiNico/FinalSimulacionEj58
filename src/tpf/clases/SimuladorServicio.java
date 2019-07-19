@@ -10,6 +10,11 @@ package tpf.clases;
  * @author nleguizamon
  */
 public interface SimuladorServicio {
+    
+    
     public void calcularTiempoAtencion(double reloj);
    
+    public Cliente getCliente();
+    
+    public void atenderCliente(Cliente cli);
 }

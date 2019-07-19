@@ -17,17 +17,27 @@ public class Surtidor implements SimuladorServicio{
     private double inicioAtencion;
     private double finAtencion;
     private boolean ocupado;
+    private Cliente cliente;
     
     public Surtidor(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;
         this.ocupado = false;
+        this.cliente = null;
     }
     
     public Surtidor(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
         this.ocupado = true;
+        this.cliente = new Cliente(inicio);
+    }
+    
+    public void desocupar(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+        this.ocupado = false;
+        this.cliente = null;
     }
 
     public double getInicioAtencion() {
@@ -71,6 +81,16 @@ public class Surtidor implements SimuladorServicio{
 
     public void ocupar(){
         this.ocupado = true;
+    }
+    
+    @Override
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    @Override
+    public void atenderCliente(Cliente cli) {
+        this.cliente = cli;
     }
     
 }

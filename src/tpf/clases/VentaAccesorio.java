@@ -17,17 +17,20 @@ public class VentaAccesorio implements SimuladorServicio{
     private double inicioAtencion;
     private double finAtencion;
     private boolean ocupado;
+    private Cliente cliente;
     
     public VentaAccesorio(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;
         this.ocupado = false;
+        this.cliente = null;
     }
     
     public VentaAccesorio(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
         this.ocupado = false;
+        this.cliente = new Cliente(inicio);
     }
 
     public double getInicioAtencion() {
@@ -71,6 +74,23 @@ public class VentaAccesorio implements SimuladorServicio{
 
     public void ocupar(){
         this.ocupado = true;
+    }
+    
+    public void desocupar(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+        this.ocupado = false;
+        this.cliente = null;
+    }
+
+    @Override
+    public Cliente getCliente() {
+        return this.cliente;
+    }
+
+    @Override
+    public void atenderCliente(Cliente cli) {
+        this.cliente = cli;
     }
     
 }
