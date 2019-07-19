@@ -11,7 +11,7 @@ import distribuciones.Normal;
  *
  * @author xtoma
  */
-public class LlegadaCliente {
+public class LlegadaCliente implements Evento{
     
     private Random generadorRnd;
     private double rndLlegada1;
@@ -79,6 +79,11 @@ public class LlegadaCliente {
         
         this.proximaLlegada = this.tiempoLlegada + reloj;
         
+    }
+
+    @Override
+    public String tipoEvento() {
+        return "llegada";
     }
     
 }

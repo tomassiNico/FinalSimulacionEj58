@@ -34,6 +34,10 @@ public class Servicio {
     public void setRndGasolinera(double rndGasolinera) {
         this.rndGasolinera = rndGasolinera;
     }
+    
+    public boolean esGasolina(){
+        return esGasolina;
+    }
 
     public String getEsGasolina() {
         String gasolina;
