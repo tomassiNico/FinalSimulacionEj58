@@ -6,6 +6,8 @@
 package tpf.clases;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tpf.eventos.LlegadaCliente;
 
 /**
@@ -33,11 +35,11 @@ public class GestorSimulacion {
     private VentaAccesorio accesorio;
     private ArrayList<Cliente> clientes;
     private VectorEstado vector;
-    private ArrayList<VectorEstado> vectores;
+    private ObservableList<VectorEstado> vectores;
     
     
     private double tiempoMaxCliente;
-    private double porcentajeCliNoCompra;
+    private int cliConCompra;
     private int colaMaxGasolinera;
     private int colaMaxGomeria;
     private int colaMaxAccesorio;
@@ -68,20 +70,44 @@ public class GestorSimulacion {
         this.gomeros.add(gomero2);
         this.accesorio = new VentaAccesorio();
         this.clientes = new ArrayList();
-        this.vector = new VectorEstado();
-        this.vectores = new ArrayList();
+        this.vectores = FXCollections.observableArrayList();;
         this.tiempoMaxCliente = 0;
-        this.porcentajeCliNoCompra = 0;
+        this.cliConCompra = 0;
         this.colaMaxAccesorio = 0;
         this.colaMaxGasolinera = 0;
         this.colaMaxGomeria = 0;
     }
     
+    public ObservableList<VectorEstado> getEstados(){
+        return this.vectores;
+    }
+    
     public void simular(){
+        this.vectores.clear();
         this.llegadaCliente.generarProximaLlegada(reloj);
         
         while(reloj < tiempoSimulacion){
+            
+            this.vector = new VectorEstado(reloj, colaGasolinera, surtidor1, surtidor2, surtidor3, colaGomeria, gomero1, gomero2, colaAccesorios, accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size());
+            vectores.add(vector);
+            System.out.println(" /************* VECTOR *********************/" );
+            System.out.println(vector.getReloj() );
+            System.out.println(" /************* VECTOR *********************/" );
+            System.out.println(" /**********************************/" );
+            System.out.println(" /**********************************/" );
+            System.out.println("reloj: " + this.reloj + " -- proxllegada: " + llegadaCliente.getProximaLlegada()  );
+            
+            System.out.println("COLA SUR: " + colaGasolinera  + " / COLA GOM: " + colaGomeria + " / COLA ACC: " + colaAccesorios);
+            System.out.println(" -- sur1: INICIO: " + surtidor1.getInicioAtencion() + " / FIN :" + surtidor1.getFinAtencion() );
+            System.out.println(" -- sur2: INICIO: " + surtidor2.getInicioAtencion() + " / FIN :" + surtidor2.getFinAtencion() );
+            System.out.println(" -- sur3: INICIO: " + surtidor3.getInicioAtencion() + " / FIN :" + surtidor3.getFinAtencion() );
+        
+            System.out.println(" -- gom1: INICIO: " + gomero1.getInicioAtencion() + " / FIN :" + gomero1.getFinAtencion() );
+            System.out.println(" -- gom2: INICIO: " + gomero2.getInicioAtencion() + " / FIN :" + gomero2.getFinAtencion() );
+            System.out.println(" -- accesorio: INICIO: " + accesorio.getInicioAtencion() + " / FIN :" + accesorio.getFinAtencion() );
+            System.out.println(" ****** PROXIMO EVENTO: " + proximoEvento());
             double proximoEvento = proximoEvento();
+            this.reloj = proximoEvento;
             
             if (proximoEvento == llegadaCliente.getProximaLlegada()) {
                 simularLlegadaCliente();
@@ -104,12 +130,19 @@ public class GestorSimulacion {
             }
             
             
-            this.reloj = proximoEvento;
+            
         }
     }
     
     private void simularFinAccesorio(){
-        
+        if (colaAccesorios == 0) {
+            accesorio.desocupar();
+        }
+        else{
+            colaAccesorios --;
+            accesorio.calcularTiempoAtencion(reloj);
+            accesorio.ocupar();
+        }
     }
     
     private void simularFinGomeria(Gomeria gom){
@@ -165,6 +198,8 @@ public class GestorSimulacion {
                 simularLlegadaAccesorio(cli);
             }
         }
+        
+        this.llegadaCliente.generarProximaLlegada(reloj);
     }
     
     private void simularLlegadaAccesorio(Cliente cli){
@@ -258,9 +293,8 @@ public class GestorSimulacion {
         }
     }
     
-    public ArrayList historiaSimulacion(){
-        return this.vectores;
+    
+    public double getReloj(){
+        return this.reloj;
     }
-    
-    
 }
