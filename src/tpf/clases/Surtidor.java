@@ -33,6 +33,7 @@ public class Surtidor implements SimuladorServicio{
         this.cliente = new Cliente(inicio);
     }
     
+    
     public void desocupar(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;

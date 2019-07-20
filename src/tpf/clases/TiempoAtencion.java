@@ -31,6 +31,13 @@ public class TiempoAtencion {
     private TiempoAtencion(){
         
     }
+    
+    public void resetear(){
+        this.setRnd(-1);
+        this.setFinAtencion(-1);
+        this.setServicio("");
+        this.setTiempoAtencion(-1);
+    }
 
     public double getRnd() {
         return rnd;

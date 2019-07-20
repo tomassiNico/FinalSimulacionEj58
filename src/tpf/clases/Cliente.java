@@ -14,6 +14,7 @@ public class Cliente {
     private double inicio;
     private double fin;
     private int numCliente;
+    private double permanencia;
     
     private static int seqCliente = 1; 
     
@@ -30,8 +31,18 @@ public class Cliente {
 
     public void setFin(double fin) {
         this.fin = fin;
+
     }
 
+    public int getNumCliente() {
+        return numCliente;
+    }
+
+    public double getPermanencia() {
+        return permanencia;
+    }
+
+  
     public double getInicio() {
         return inicio;
     }
@@ -42,6 +53,7 @@ public class Cliente {
     
     public void salirSistema(double reloj){
         this.fin = reloj;
+        this.permanencia = this.fin - this.inicio;
     }
     
 }

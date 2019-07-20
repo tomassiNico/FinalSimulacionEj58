@@ -37,24 +37,33 @@ public class VectorEstado {
         this.reloj = reloj;
     }
 
-    public double getRnd1Ll() {
-        return rnd1Ll;
+    public String getRnd1Ll() {
+        if (rnd1Ll == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(rnd1Ll*10000.0)/10000.0);
     }
 
     public void setRnd1Ll(double rnd1Ll) {
         this.rnd1Ll = rnd1Ll;
     }
 
-    public double getRnd2Ll() {
-        return rnd2Ll;
+    public String getRnd2Ll() {
+        if (rnd2Ll == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(rnd2Ll*10000.0)/10000.0);
     }
 
     public void setRnd2Ll(double rnd2Ll) {
         this.rnd2Ll = rnd2Ll;
     }
 
-    public double getTiempoLl() {
-        return tiempoLl;
+    public String getTiempoLl() {
+        if (tiempoLl == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(tiempoLl*10000.0)/10000.0);
     }
 
     public void setTiempoLl(double tiempoLl) {
@@ -69,24 +78,39 @@ public class VectorEstado {
         this.proxLl = proxLl;
     }
 
-    public double getRndSer() {
-        return rndSer;
+    public String getRndSer() {
+        if (rndSer == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(rndSer*10000.0)/10000.0);
     }
 
     public void setRndSer(double rndSer) {
         this.rndSer = rndSer;
     }
 
-    public boolean isGasolina() {
-        return gasolina;
+    public String isGasolina() {
+        if (rndSer == -1) {
+            return "";
+        }
+        if (gasolina) {
+            return "SI";
+        }
+        else{
+            return "NO";
+            
+        }
     }
 
     public void setGasolina(boolean gasolina) {
         this.gasolina = gasolina;
     }
 
-    public double getRndOtSer() {
-        return rndOtSer;
+    public String getRndOtSer() {
+        if (rndOtSer == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(rndOtSer*10000.0)/10000.0);
     }
 
     public void setRndOtSer(double rndOtSer) {
@@ -101,24 +125,33 @@ public class VectorEstado {
         this.otSer = otSer;
     }
 
-    public double getRndTiAt() {
-        return rndTiAt;
+    public String getRndTiAt() {
+        if (rndTiAt == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(rndTiAt*10000.0)/10000.0);
     }
 
     public void setRndTiAt(double rndTiAt) {
         this.rndTiAt = rndTiAt;
     }
 
-    public double getTiemAt() {
-        return tiemAt;
+    public String getTiemAt() {
+        if (tiemAt == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(tiemAt*10000.0)/10000.0);
     }
 
     public void setTiemAt(double tiemAt) {
         this.tiemAt = tiemAt;
     }
 
-    public double getFinAt() {
-        return finAt;
+    public String getFinAt() {
+        if (finAt == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finAt*10000.0)/10000.0);
     }
 
     public void setFinAt(double finAt) {
@@ -141,48 +174,66 @@ public class VectorEstado {
         this.colaSur = colaSur;
     }
 
-    public double getInSur1() {
-        return inSur1;
+    public String getInSur1() {
+        if (inSur1 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inSur1*10000.0)/10000.0);
     }
 
     public void setInSur1(double inSur1) {
         this.inSur1 = inSur1;
     }
 
-    public double getFinSur1() {
-        return finSur1;
+    public String getFinSur1() {
+        if (finSur1 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finSur1*10000.0)/10000.0);
     }
 
     public void setFinSur1(double finSur1) {
         this.finSur1 = finSur1;
     }
 
-    public double getInSur2() {
-        return inSur2;
+    public String getInSur2() {
+        if (inSur2 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inSur2*10000.0)/10000.0);
     }
 
     public void setInSur2(double inSur2) {
         this.inSur2 = inSur2;
     }
 
-    public double getFinSur2() {
-        return finSur2;
+    public String getFinSur2() {
+        if (finSur2 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finSur2*10000.0)/10000.0);
     }
 
     public void setFinSur2(double finSur2) {
         this.finSur2 = finSur2;
     }
 
-    public double getInSur3() {
-        return inSur3;
+    public String getInSur3() {
+        if (inSur3 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inSur3*10000.0)/10000.0);
     }
 
     public void setInSur3(double inSur3) {
         this.inSur3 = inSur3;
     }
 
-    public double getFinSur3() {
-        return finSur3;
+    public String getFinSur3() {
+        if (finSur3 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finSur3*10000.0)/10000.0);
     }
 
     public void setFinSur3(double finSur3) {
@@ -197,32 +248,44 @@ public class VectorEstado {
         this.colaGom = colaGom;
     }
 
-    public double getInGom1() {
-        return inGom1;
+    public String getInGom1() {
+        if (inGom1 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inGom1*10000.0)/10000.0);
     }
 
     public void setInGom1(double inGom1) {
         this.inGom1 = inGom1;
     }
 
-    public double getFinGom1() {
-        return finGom1;
+    public String getFinGom1() {
+        if (finGom1 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finGom1*10000.0)/10000.0);
     }
 
     public void setFinGom1(double finGom1) {
         this.finGom1 = finGom1;
     }
 
-    public double getInGom2() {
-        return inGom2;
+    public String getInGom2() {
+        if (inGom2 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inGom2*10000.0)/10000.0);
     }
 
     public void setInGom2(double inGom2) {
         this.inGom2 = inGom2;
     }
 
-    public double getFinGom2() {
-        return finGom2;
+    public String getFinGom2() {
+        if (finGom2 == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finGom2*10000.0)/10000.0);
     }
 
     public void setFinGom2(double finGom2) {
@@ -237,16 +300,22 @@ public class VectorEstado {
         this.colaAcc = colaAcc;
     }
 
-    public double getInAcc() {
-        return inAcc;
+    public String getInAcc() {
+        if (inAcc == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(inAcc*10000.0)/10000.0);
     }
 
     public void setInAcc(double inAcc) {
         this.inAcc = inAcc;
     }
 
-    public double getFinAcc() {
-        return finAcc;
+    public String getFinAcc() {
+        if (finAcc == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(finAcc*10000.0)/10000.0);
     }
 
     public void setFinAcc(double finAcc) {

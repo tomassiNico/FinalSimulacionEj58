@@ -158,10 +158,6 @@ public class FXMLventanaController implements Initializable {
         this.maxColaGomColumn.setCellValueFactory(new PropertyValueFactory("maxGom"));
         this.maxColaAccColumn.setCellValueFactory(new PropertyValueFactory("maxAcc"));
         
-        GestorSimulacion simulador = new GestorSimulacion(10, 0, 500);
-        simulador.simular();
-        
-        System.out.println("reloj: " + simulador.getReloj() );
     }    
 
     @FXML

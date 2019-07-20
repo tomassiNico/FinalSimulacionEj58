@@ -90,22 +90,8 @@ public class GestorSimulacion {
             
             this.vector = new VectorEstado(reloj, colaGasolinera, surtidor1, surtidor2, surtidor3, colaGomeria, gomero1, gomero2, colaAccesorios, accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size());
             vectores.add(vector);
-            System.out.println(" /************* VECTOR *********************/" );
-            System.out.println(vector.getReloj() );
-            System.out.println(" /************* VECTOR *********************/" );
-            System.out.println(" /**********************************/" );
-            System.out.println(" /**********************************/" );
-            System.out.println("reloj: " + this.reloj + " -- proxllegada: " + llegadaCliente.getProximaLlegada()  );
+            resetearDatos();
             
-            System.out.println("COLA SUR: " + colaGasolinera  + " / COLA GOM: " + colaGomeria + " / COLA ACC: " + colaAccesorios);
-            System.out.println(" -- sur1: INICIO: " + surtidor1.getInicioAtencion() + " / FIN :" + surtidor1.getFinAtencion() );
-            System.out.println(" -- sur2: INICIO: " + surtidor2.getInicioAtencion() + " / FIN :" + surtidor2.getFinAtencion() );
-            System.out.println(" -- sur3: INICIO: " + surtidor3.getInicioAtencion() + " / FIN :" + surtidor3.getFinAtencion() );
-        
-            System.out.println(" -- gom1: INICIO: " + gomero1.getInicioAtencion() + " / FIN :" + gomero1.getFinAtencion() );
-            System.out.println(" -- gom2: INICIO: " + gomero2.getInicioAtencion() + " / FIN :" + gomero2.getFinAtencion() );
-            System.out.println(" -- accesorio: INICIO: " + accesorio.getInicioAtencion() + " / FIN :" + accesorio.getFinAtencion() );
-            System.out.println(" ****** PROXIMO EVENTO: " + proximoEvento());
             double proximoEvento = proximoEvento();
             this.reloj = proximoEvento;
             
@@ -134,7 +120,14 @@ public class GestorSimulacion {
         }
     }
     
+    private void resetearDatos(){
+        llegadaCliente.resetear();
+        servicioSolicitado.resetear();
+    }
+    
     private void simularFinAccesorio(){
+        Cliente cli = accesorio.getCliente();
+        cli.salirSistema(reloj);
         if (colaAccesorios == 0) {
             accesorio.desocupar();
         }
@@ -146,6 +139,8 @@ public class GestorSimulacion {
     }
     
     private void simularFinGomeria(Gomeria gom){
+        Cliente cli = gom.getCliente();
+        cli.salirSistema(reloj);
         if (colaGomeria == 0) {
             gom.desocupar();
         }
@@ -168,7 +163,7 @@ public class GestorSimulacion {
                 simularLlegadaAccesorio(cli);
             }
             else{
-                cli.setFin(reloj);
+                cli.salirSistema(reloj);
             }
         }
         
@@ -257,6 +252,7 @@ public class GestorSimulacion {
             if (colaGasolinera > colaMaxGasolinera) {
                 colaMaxGasolinera = colaGasolinera;
             }
+            TiempoAtencion.getInstance().resetear();
         }
         
     }
