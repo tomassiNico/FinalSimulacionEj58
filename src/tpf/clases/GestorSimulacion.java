@@ -34,6 +34,14 @@ public class GestorSimulacion {
     private ArrayList<Cliente> clientes;
     private VectorEstado vector;
     private ArrayList<VectorEstado> vectores;
+    
+    
+    private double tiempoMaxCliente;
+    private double porcentajeCliNoCompra;
+    private int colaMaxGasolinera;
+    private int colaMaxGomeria;
+    private int colaMaxAccesorio;
+    
 
     public GestorSimulacion(double tiempo, double desde, double hasta) {
         this.reloj = 0;
@@ -62,6 +70,11 @@ public class GestorSimulacion {
         this.clientes = new ArrayList();
         this.vector = new VectorEstado();
         this.vectores = new ArrayList();
+        this.tiempoMaxCliente = 0;
+        this.porcentajeCliNoCompra = 0;
+        this.colaMaxAccesorio = 0;
+        this.colaMaxGasolinera = 0;
+        this.colaMaxGomeria = 0;
     }
     
     public void simular(){
@@ -89,6 +102,9 @@ public class GestorSimulacion {
             if (proximoEvento == accesorio.getFinAtencion()) {
                 simularFinAccesorio();
             }
+            
+            
+            this.reloj = proximoEvento;
         }
     }
     
@@ -109,12 +125,17 @@ public class GestorSimulacion {
     
     private void simularFinGasolinera(Surtidor sur){
         servicioSolicitado.servicioPosGasolinera();
+        Cliente cli = sur.getCliente();
+
         if (servicioSolicitado.getOtroServicio() == "Gomeria") {
-            simularLlegadaGomeria();
+            simularLlegadaGomeria(cli);
         }
         else{
             if (servicioSolicitado.getOtroServicio() == "Accesorio") {
-                simularLlegadaAccesorio();
+                simularLlegadaAccesorio(cli);
+            }
+            else{
+                cli.setFin(reloj);
             }
         }
         
@@ -130,31 +151,37 @@ public class GestorSimulacion {
     
     private void simularLlegadaCliente(){
         this.servicioSolicitado.servicioSolicitado();
+        Cliente cli = new Cliente(reloj);
+        this.clientes.add(cli);
         
         if (servicioSolicitado.esGasolina()) {
-            simularLlegadaGasolinera();
+            simularLlegadaGasolinera(cli);
         }
         else{
             if (servicioSolicitado.getOtroServicio() == "Gomeria") {
-                simularLlegadaGomeria();
+                simularLlegadaGomeria(cli);
             }
             if (servicioSolicitado.getOtroServicio() == "Accesorio") {
-                simularLlegadaAccesorio();
+                simularLlegadaAccesorio(cli);
             }
         }
     }
     
-    private void simularLlegadaAccesorio(){
+    private void simularLlegadaAccesorio(Cliente cli){
         if (!accesorio.estaOcupado()) {
             accesorio.calcularTiempoAtencion(reloj);
             accesorio.ocupar();
+            accesorio.atenderCliente(cli);
         }
         else{
             colaAccesorios ++;
+            if (colaAccesorios > colaMaxAccesorio) {
+                colaMaxAccesorio = colaAccesorios;
+            }
         }
     }
     
-    private void simularLlegadaGomeria(){
+    private void simularLlegadaGomeria(Cliente cli){
         Gomeria gomDesocupada = null;
         for (Gomeria gom: gomeros) {
             if (!gom.estaOcupado()) {
@@ -166,13 +193,17 @@ public class GestorSimulacion {
         if (gomDesocupada != null) {
             gomDesocupada.calcularTiempoAtencion(reloj);
             gomDesocupada.ocupar();
+            gomDesocupada.atenderCliente(cli);
         }
         else{
             colaGomeria ++;
+            if (colaGomeria > colaMaxGomeria) {
+                colaMaxGomeria = colaGomeria;
+            }
         }
     }
     
-    private void simularLlegadaGasolinera(){
+    private void simularLlegadaGasolinera(Cliente cli){
         Surtidor surDesocupado = null;
         for (Surtidor sur: surtidores) {
             if (!sur.estaOcupado()) {
@@ -184,9 +215,13 @@ public class GestorSimulacion {
         if (surDesocupado != null) {
             surDesocupado.calcularTiempoAtencion(reloj);
             surDesocupado.ocupar();
+            surDesocupado.atenderCliente(cli);
         }
         else{
             colaGasolinera ++;
+            if (colaGasolinera > colaMaxGasolinera) {
+                colaMaxGasolinera = colaGasolinera;
+            }
         }
         
     }
@@ -213,6 +248,15 @@ public class GestorSimulacion {
         return tiempoSigEvento;
     }
     
+    private void finalizarAtencionCliente(Cliente cli){
+        cli.setFin(reloj);
+        
+        double tiempoPermanencia = cli.getFin() - cli.getInicio(); 
+        
+        if (tiempoMaxCliente < tiempoPermanencia) {
+            tiempoMaxCliente = tiempoPermanencia;
+        }
+    }
     
     public ArrayList historiaSimulacion(){
         return this.vectores;

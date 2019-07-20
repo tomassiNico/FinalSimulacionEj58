@@ -5,6 +5,7 @@
  */
 package finalsimulacionej58;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;

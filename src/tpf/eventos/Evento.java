@@ -10,5 +10,5 @@ package tpf.eventos;
  * @author xtoma
  */
 public interface Evento {
-    
+    public String tipoEvento();
 }
