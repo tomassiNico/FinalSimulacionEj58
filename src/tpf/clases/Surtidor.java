@@ -5,18 +5,39 @@
  */
 package tpf.clases;
 
+import distribuciones.Uniforme;
+import java.util.Random;
+
 /**
  *
  * @author xtoma
  */
-public class Surtidor {
+public class Surtidor implements SimuladorServicio{
     
     private double inicioAtencion;
     private double finAtencion;
+    private boolean ocupado;
+    private Cliente cliente;
+    
+    public Surtidor(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+        this.ocupado = false;
+        this.cliente = null;
+    }
     
     public Surtidor(double inicio){
         this.inicioAtencion = inicio;
         this.finAtencion = -1;
+        this.ocupado = true;
+        this.cliente = new Cliente(inicio);
+    }
+    
+    public void desocupar(){
+        this.inicioAtencion = -1;
+        this.finAtencion = -1;
+        this.ocupado = false;
+        this.cliente = null;
     }
 
     public double getInicioAtencion() {
@@ -34,7 +55,42 @@ public class Surtidor {
     public void setFinAtencion(double finAtencion) {
         this.finAtencion = finAtencion;
     }
+
+    @Override
+    public void calcularTiempoAtencion(double reloj) {
+        String sevicio = "Gasolinera";
+        
+        Random generadorRnd = new Random();
+        double rnd = generadorRnd.nextDouble();
+        
+        Uniforme distUni = new Uniforme(10.0, 26.0);
+        double tiempoAtencion = distUni.generarNumero(rnd);
+        this.inicioAtencion = reloj;
+        this.finAtencion =  reloj + tiempoAtencion;
+        
+        TiempoAtencion tiempo = TiempoAtencion.getInstance();
+        tiempo.setRnd(rnd);
+        tiempo.setServicio(sevicio);
+        tiempo.setTiempoAtencion(tiempoAtencion);
+        tiempo.setFinAtencion(this.finAtencion); 
+    }
     
+    public boolean estaOcupado(){
+        return this.ocupado;
+    }
+
+    public void ocupar(){
+        this.ocupado = true;
+    }
     
+    @Override
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    @Override
+    public void atenderCliente(Cliente cli) {
+        this.cliente = cli;
+    }
     
 }

@@ -13,10 +13,15 @@ public class Cliente {
     
     private double inicio;
     private double fin;
+    private int numCliente;
+    
+    private static int seqCliente = 1; 
     
     public Cliente(double inicio){
         this.inicio = inicio;
         this.fin = -1;
+        this.numCliente = this.seqCliente;
+        seqCliente++;
     }
 
     public void setInicio(double inicio) {
@@ -33,6 +38,10 @@ public class Cliente {
 
     public double getFin() {
         return fin;
+    }
+    
+    public void salirSistema(double reloj){
+        this.fin = reloj;
     }
     
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<ScrollPane prefHeight="764.0" prefWidth="1949.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalsimulacionej58.FXMLventanaController">
+<ScrollPane prefHeight="764.0" prefWidth="1949.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalsimulacionej58.FXMLventanaController">
    <content>
       <AnchorPane id="AnchorPane" prefHeight="762.0" prefWidth="1926.0">
           <children>
@@ -19,7 +19,8 @@
                       <TableColumn fx:id="relojColumn" prefWidth="36.00002861022949" text="Reloj" />
                         <TableColumn editable="false" prefWidth="140.79996490478516" text="Llegada Cliente">
                            <columns>
-                              <TableColumn fx:id="rndLlegadaColumn" prefWidth="32.0" text="RND" />
+                              <TableColumn fx:id="rndLlegada1Column" prefWidth="32.0" text="RND1" />
+                              <TableColumn fx:id="rndLlegada2Column" prefWidth="32.0" text="RND2" />
                               <TableColumn fx:id="tiempoLlegadaColumn" prefWidth="54.0" text="Tiempo" />
                               <TableColumn fx:id="proximaLlegadaColumn" prefWidth="45.0" text="Prox." />
                            </columns>
@@ -67,7 +68,7 @@
                               </TableColumn>
                            </columns>
                         </TableColumn>
-                        <TableColumn prefWidth="258.0" text="Empleados gomeriía(n)">
+                        <TableColumn prefWidth="258.0" text="Empleados gomería(n)">
                            <columns>
                               <TableColumn fx:id="colaGomColumn" prefWidth="91.2000732421875" text="ColaGomeria" />
                               <TableColumn prefWidth="40.79998779296875" text="1">
