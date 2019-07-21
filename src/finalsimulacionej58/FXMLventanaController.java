@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import tpf.clases.Cliente;
 import tpf.clases.GestorSimulacion;
 import tpf.clases.VectorEstado;
 
@@ -110,6 +111,19 @@ public class FXMLventanaController implements Initializable {
     private TableColumn<VectorEstado, Double>  rndLlegada2Column;
 
     private ObservableList<VectorEstado> estados;
+    private ObservableList<Cliente> clientes;
+    
+    private GestorSimulacion simulador;
+    @FXML
+    private TableView<Cliente> tableClientes;
+    @FXML
+    private TableColumn<Cliente, Integer> numCliColumn;
+    @FXML
+    private TableColumn<Cliente, Double> inicioCliColumn;
+    @FXML
+    private TableColumn<Cliente, Double> finCliColumn;
+    @FXML
+    private TableColumn<Cliente, Double> tiempoPermanenciaColumn;
     
     /**
      * Initializes the controller class.
@@ -158,16 +172,25 @@ public class FXMLventanaController implements Initializable {
         this.maxColaGomColumn.setCellValueFactory(new PropertyValueFactory("maxGom"));
         this.maxColaAccColumn.setCellValueFactory(new PropertyValueFactory("maxAcc"));
         
+        this.compraClientesColumn.setCellValueFactory(new PropertyValueFactory("compraron"));
+        this.totalClientesAtendidosColumn.setCellValueFactory(new PropertyValueFactory("totalCli"));
+        this.maxTiempoSistemaColumn.setCellValueFactory(new PropertyValueFactory("maxPermanencia"));
+        
+        this.numCliColumn.setCellValueFactory(new PropertyValueFactory("numCliente"));
+        this.inicioCliColumn.setCellValueFactory(new PropertyValueFactory("inicio"));
+        this.finCliColumn.setCellValueFactory(new PropertyValueFactory("fin"));
+        this.tiempoPermanenciaColumn.setCellValueFactory(new PropertyValueFactory("permanencia"));
     }    
 
     @FXML
     private void clickBtnSimular(MouseEvent event) {
-        GestorSimulacion simulador = new GestorSimulacion(Double.parseDouble(txtHorasSimulacion.textProperty().get()),Double.parseDouble(txtHoraDesde.textProperty().get()), Double.parseDouble(txtHoraHasta.textProperty().get()));
+        simulador = new GestorSimulacion(Double.parseDouble(txtHorasSimulacion.textProperty().get()),Double.parseDouble(txtHoraDesde.textProperty().get()), Double.parseDouble(txtHoraHasta.textProperty().get()));
         simulador.simular();
         estados = simulador.getEstados();
-        
+        clientes = simulador.getClientes();
         
         tableVectorEstado.setItems(estados);
+        tableClientes.setItems(clientes);
            Alert dialog = new Alert(Alert.AlertType.INFORMATION);
            dialog.setTitle("Éxito");
            dialog.setHeaderText("Simulacion");

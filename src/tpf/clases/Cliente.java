@@ -15,12 +15,14 @@ public class Cliente {
     private double fin;
     private int numCliente;
     private double permanencia;
+    private boolean compro;
     
     private static int seqCliente = 1; 
     
     public Cliente(double inicio){
         this.inicio = inicio;
         this.fin = -1;
+        this.compro = false;
         this.numCliente = this.seqCliente;
         seqCliente++;
     }
@@ -54,6 +56,14 @@ public class Cliente {
     public void salirSistema(double reloj){
         this.fin = reloj;
         this.permanencia = this.fin - this.inicio;
+    }
+    
+    public void comprar(){
+        this.compro = true;
+    }
+    
+    public boolean hizoCompra(){
+        return this.compro;
     }
     
 }

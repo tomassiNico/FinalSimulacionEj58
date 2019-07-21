@@ -33,7 +33,7 @@ public class GestorSimulacion {
     private Gomeria  gomero2;
     private ArrayList<Gomeria> gomeros;
     private VentaAccesorio accesorio;
-    private ArrayList<Cliente> clientes;
+    private ObservableList<Cliente> clientes;
     private VectorEstado vector;
     private ObservableList<VectorEstado> vectores;
     
@@ -69,8 +69,8 @@ public class GestorSimulacion {
         this.gomeros.add(gomero1);
         this.gomeros.add(gomero2);
         this.accesorio = new VentaAccesorio();
-        this.clientes = new ArrayList();
-        this.vectores = FXCollections.observableArrayList();;
+        this.clientes = FXCollections.observableArrayList();
+        this.vectores = FXCollections.observableArrayList();
         this.tiempoMaxCliente = 0;
         this.cliConCompra = 0;
         this.colaMaxAccesorio = 0;
@@ -88,7 +88,7 @@ public class GestorSimulacion {
         
         while(reloj < tiempoSimulacion){
             
-            this.vector = new VectorEstado(reloj, colaGasolinera, surtidor1, surtidor2, surtidor3, colaGomeria, gomero1, gomero2, colaAccesorios, accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size());
+            this.vector = new VectorEstado(reloj, colaGasolinera, surtidor1, surtidor2, surtidor3, colaGomeria, gomero1, gomero2, colaAccesorios, accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size(), tiempoMaxCliente);
             vectores.add(vector);
             resetearDatos();
             
@@ -128,6 +128,12 @@ public class GestorSimulacion {
     private void simularFinAccesorio(){
         Cliente cli = accesorio.getCliente();
         cli.salirSistema(reloj);
+        cli.comprar();
+        cliConCompra ++;
+        accesorio.desocupar();
+        if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+            }
         if (colaAccesorios == 0) {
             accesorio.desocupar();
         }
@@ -137,23 +143,28 @@ public class GestorSimulacion {
             accesorio.ocupar();
         }
     }
-    
+        
     private void simularFinGomeria(Gomeria gom){
         Cliente cli = gom.getCliente();
         cli.salirSistema(reloj);
+        gom.desocupar();
+        if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+            }
         if (colaGomeria == 0) {
             gom.desocupar();
         }
         else{
             colaGomeria --;
             gom.calcularTiempoAtencion(reloj);
-            gom.ocupar();
+            gom.ocupar(); 
         }
     }
     
     private void simularFinGasolinera(Surtidor sur){
         servicioSolicitado.servicioPosGasolinera();
         Cliente cli = sur.getCliente();
+        sur.desocupar();
 
         if (servicioSolicitado.getOtroServicio() == "Gomeria") {
             simularLlegadaGomeria(cli);
@@ -164,6 +175,9 @@ public class GestorSimulacion {
             }
             else{
                 cli.salirSistema(reloj);
+                if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+                }
             }
         }
         
@@ -289,6 +303,9 @@ public class GestorSimulacion {
         }
     }
     
+    public ObservableList<Cliente> getClientes(){
+        return this.clientes;
+    }
     
     public double getReloj(){
         return this.reloj;

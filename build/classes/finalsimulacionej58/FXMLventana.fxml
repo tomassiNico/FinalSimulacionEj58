@@ -1,125 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<ScrollPane prefHeight="764.0" prefWidth="1949.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalsimulacionej58.FXMLventanaController">
+<ScrollPane styleClass="background" stylesheets="@FXCSS.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalsimulacionej58.FXMLventanaController">
    <content>
-      <AnchorPane id="AnchorPane" prefHeight="762.0" prefWidth="1926.0" stylesheets="@FXCSS.css">
+      <AnchorPane id="background" prefHeight="964.0" prefWidth="1910.0" styleClass="background">
           <children>
-            <TableView fx:id="tableVectorEstado" layoutX="14.0" layoutY="241.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="505.0" prefWidth="1896.0">
-              <columns>
-                <TableColumn fx:id="relojColumn" prefWidth="60.0" text="Reloj" />
-                  <TableColumn editable="false" prefWidth="140.79996490478516" text="Llegada Cliente">
-                     <columns>
-                        <TableColumn fx:id="rndLlegada1Column" prefWidth="60.0" text="RND1" />
-                        <TableColumn fx:id="rndLlegada2Column" prefWidth="60.0" text="RND2" />
-                        <TableColumn fx:id="tiempoLlegadaColumn" prefWidth="60.0" text="Tiempo" />
-                        <TableColumn id="#fxEvento" fx:id="proximaLlegadaColumn" prefWidth="60.0" styleClass="FXCSS" text="Prox." />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn minWidth="0.0" prefWidth="116.00003051757812" text="Servicio gasolina ">
-                     <columns>
-                        <TableColumn fx:id="rndGasolinaColumn" prefWidth="60.0" text="RND" />
-                        <TableColumn fx:id="gasolinaColumn" prefWidth="60.0" text="SI/NO" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn minWidth="0.0" prefWidth="139.20001220703125" text="Otro servicio ">
-                     <columns>
-                        <TableColumn fx:id="rndOtroServicioColumn" prefWidth="60.0" text="RND" />
-                        <TableColumn fx:id="otroServicioColumn" prefWidth="180.0" text="Accesorio/Gomeria" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="405.60003662109375" text="Tiempo atención servicio">
-                     <columns>
-                        <TableColumn fx:id="rndDemoraColumn" prefWidth="60.0" text="RND" />
-                        <TableColumn fx:id="tiempoAtencionColumn" prefWidth="180.0" text="tiempoDemora" />
-                        <TableColumn fx:id="finAtencionColumn" minWidth="60.0" prefWidth="75.0" text="FinAtención" />
-                        <TableColumn fx:id="servicioColumn" minWidth="180.0" prefWidth="70.0" text="Servicio" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="258.0" text="Surtidores Combustible(n)">
-                     <columns>
-                        <TableColumn fx:id="colaSurColumn" minWidth="40.0" prefWidth="100.0" text="ColaSurtidores" />
-                        <TableColumn prefWidth="40.79998779296875" text="1">
+            <TabPane layoutX="14.0" layoutY="241.0">
+               <tabs>
+                  <Tab closable="false" text="Simulación">
+                     <content>
+                        <TableView fx:id="tableVectorEstado" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="695.0" prefWidth="1896.0" styleClass="background" stylesheets="@FXCSS.css">
+                          <columns>
+                            <TableColumn fx:id="relojColumn" text="Reloj" />
+                              <TableColumn editable="false" prefWidth="140.79996490478516" text="Llegada Cliente">
+                                 <columns>
+                                    <TableColumn fx:id="rndLlegada1Column" text="RND1" />
+                                    <TableColumn fx:id="rndLlegada2Column" prefWidth="90.0" text="RND2" />
+                                    <TableColumn fx:id="tiempoLlegadaColumn" prefWidth="120.0" text="Tiempo" />
+                                    <TableColumn id="#fxEvento" fx:id="proximaLlegadaColumn" prefWidth="120.0" text="Prox." />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="116.00003051757812" text="Servicio gasolina ">
+                                 <columns>
+                                    <TableColumn fx:id="rndGasolinaColumn" prefWidth="70.0" text="RND" />
+                                    <TableColumn fx:id="gasolinaColumn" prefWidth="90.0" text="SI/NO" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="139.20001220703125" text="Otro servicio ">
+                                 <columns>
+                                    <TableColumn fx:id="rndOtroServicioColumn" prefWidth="70.0" text="RND" />
+                                    <TableColumn fx:id="otroServicioColumn" prefWidth="230.0" text="Accesorio/Gomeria" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="405.60003662109375" text="Tiempo atención servicio">
+                                 <columns>
+                                    <TableColumn fx:id="rndDemoraColumn" prefWidth="70.0" text="RND" />
+                                    <TableColumn fx:id="tiempoAtencionColumn" prefWidth="185.0" text="tiempoDemora" />
+                                    <TableColumn fx:id="finAtencionColumn" minWidth="60.0" prefWidth="150.0" text="FinAtención" />
+                                    <TableColumn fx:id="servicioColumn" minWidth="50.0" prefWidth="110.0" text="Servicio" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="258.0" text="Surtidores Combustible(n)">
+                                 <columns>
+                                    <TableColumn fx:id="colaSurColumn" minWidth="40.0" prefWidth="100.0" text="ColaSurtidores" />
+                                    <TableColumn prefWidth="40.79998779296875" text="1">
+                                       <columns>
+                                          <TableColumn fx:id="inicioSur1Column" prefWidth="75.0" text="Inicio" />
+                                          <TableColumn fx:id="finSur1Column" minWidth="0.0" prefWidth="75.0" text="Fin" />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="23.000030517578125" text="2">
+                                       <columns>
+                                          <TableColumn fx:id="inicioSur2Column" prefWidth="75.0" text="Inicio" />
+                                          <TableColumn fx:id="finSur2Column" prefWidth="75.0" text="Fin" />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="23.000030517578125" text="3">
+                                       <columns>
+                                          <TableColumn fx:id="inicioSur3Column" prefWidth="75.0" text="Inicio" />
+                                          <TableColumn fx:id="finSur3Column" prefWidth="75.0" text="Fin" />
+                                       </columns>
+                                    </TableColumn>
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="258.0" text="Empleados gomería(n)">
+                                 <columns>
+                                    <TableColumn fx:id="colaGomColumn" minWidth="40.0" prefWidth="105.0" text="ColaGomeria" />
+                                    <TableColumn prefWidth="40.79998779296875" text="1">
+                                       <columns>
+                                          <TableColumn fx:id="inicioGom1Column" prefWidth="75.0" text="Inicio" />
+                                          <TableColumn fx:id="finGom1Column" minWidth="0.0" prefWidth="75.0" text="Fin" />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="23.000030517578125" text="2">
+                                       <columns>
+                                          <TableColumn fx:id="inicioGom2Column" prefWidth="75.0" text="Inicio" />
+                                          <TableColumn fx:id="finGom2Column" prefWidth="75.0" text="Fin" />
+                                       </columns>
+                                    </TableColumn>
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="123.1998291015625" text="Venta accesorios">
+                                 <columns>
+                                    <TableColumn fx:id="colaAccColumn" prefWidth="105.0" text="ColaAccesorios" />
+                                    <TableColumn fx:id="inicioAccColumn" minWidth="0.0" prefWidth="75.0" text="Inicio" />
+                                    <TableColumn fx:id="finAccColumn" minWidth="0.0" prefWidth="75.0" text="Fin" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="123.1998291015625" text="Colas máximas">
+                                 <columns>
+                                    <TableColumn fx:id="maxColaSurColumn" prefWidth="100.0" text="Surtidor" />
+                                    <TableColumn fx:id="maxColaGomColumn" minWidth="0.0" prefWidth="100.0" text="Gomería" />
+                                    <TableColumn fx:id="maxColaAccColumn" minWidth="0.0" prefWidth="100.0" text="Accesorios" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="123.1998291015625" text="Clientes atendidos">
+                                 <columns>
+                                    <TableColumn fx:id="compraClientesColumn" prefWidth="150.0" text="Compraron" />
+                                    <TableColumn fx:id="totalClientesAtendidosColumn" minWidth="0.0" prefWidth="120.0" text="Total" />
+                                    <TableColumn fx:id="maxTiempoSistemaColumn" prefWidth="250.0" text="Tiempo max permanenca" />
+                                 </columns>
+                              </TableColumn>
+                          </columns>
+                        </TableView>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Clientes">
+                     <content>
+                        <TableView fx:id="tableClientes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="695.0" prefWidth="1896.0" styleClass="background" stylesheets="@FXCSS.css">
                            <columns>
-                              <TableColumn fx:id="inicioSur1Column" prefWidth="60.0" text="Inicio" />
-                              <TableColumn fx:id="finSur1Column" minWidth="0.0" prefWidth="60.0" text="Fin" />
+                              <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Tiempo atención servicio">
+                                 <columns>
+                                    <TableColumn fx:id="numCliColumn" maxWidth="500.0" prefWidth="250.0" text="Número de cliente" />
+                                    <TableColumn fx:id="inicioCliColumn" maxWidth="500.0" prefWidth="320.0" text="Tiempo entrada al sistema" />
+                                    <TableColumn fx:id="finCliColumn" maxWidth="500.0" prefWidth="320.0" text="Tiempo salida del sistema" />
+                                    <TableColumn fx:id="tiempoPermanenciaColumn" maxWidth="500.0" prefWidth="300.0" text="Tiempo de permanencia" />
+                                 </columns>
+                              </TableColumn>
                            </columns>
-                        </TableColumn>
-                        <TableColumn prefWidth="23.000030517578125" text="2">
-                           <columns>
-                              <TableColumn fx:id="inicioSur2Column" prefWidth="60.0" text="Inicio" />
-                              <TableColumn fx:id="finSur2Column" prefWidth="60.0" text="Fin" />
-                           </columns>
-                        </TableColumn>
-                        <TableColumn prefWidth="23.000030517578125" text="3">
-                           <columns>
-                              <TableColumn fx:id="inicioSur3Column" prefWidth="60.0" text="Inicio" />
-                              <TableColumn fx:id="finSur3Column" prefWidth="60.0" text="Fin" />
-                           </columns>
-                        </TableColumn>
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="258.0" text="Empleados gomería(n)">
-                     <columns>
-                        <TableColumn fx:id="colaGomColumn" minWidth="40.0" prefWidth="105.0" text="ColaGomeria" />
-                        <TableColumn prefWidth="40.79998779296875" text="1">
-                           <columns>
-                              <TableColumn fx:id="inicioGom1Column" prefWidth="60.0" text="Inicio" />
-                              <TableColumn fx:id="finGom1Column" minWidth="0.0" prefWidth="60.0" text="Fin" />
-                           </columns>
-                        </TableColumn>
-                        <TableColumn prefWidth="23.000030517578125" text="2">
-                           <columns>
-                              <TableColumn fx:id="inicioGom2Column" prefWidth="60.0" text="Inicio" />
-                              <TableColumn fx:id="finGom2Column" prefWidth="60.0" text="Fin" />
-                           </columns>
-                        </TableColumn>
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="123.1998291015625" text="Venta accesorios">
-                     <columns>
-                        <TableColumn fx:id="colaAccColumn" prefWidth="105.0" text="ColaAccesorios" />
-                        <TableColumn fx:id="inicioAccColumn" minWidth="0.0" prefWidth="60.0" text="Inicio" />
-                        <TableColumn fx:id="finAccColumn" minWidth="0.0" prefWidth="60.0" text="Fin" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="123.1998291015625" text="Colas máximas">
-                     <columns>
-                        <TableColumn fx:id="maxColaSurColumn" prefWidth="90.0" text="Surtidor" />
-                        <TableColumn fx:id="maxColaGomColumn" minWidth="0.0" prefWidth="90.0" text="Gomería" />
-                        <TableColumn fx:id="maxColaAccColumn" minWidth="0.0" prefWidth="90.0" text="Accesorios" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="123.1998291015625" text="Clientes atendidos">
-                     <columns>
-                        <TableColumn fx:id="compraClientesColumn" prefWidth="120.0" text="Compraron" />
-                        <TableColumn fx:id="totalClientesAtendidosColumn" minWidth="0.0" prefWidth="120.0" text="Total" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="180.0" text="Tiempo max en sist.">
-                     <columns>
-                        <TableColumn fx:id="maxTiempoSistemaColumn" prefWidth="180.0" text="Tiempo" />
-                     </columns>
-                  </TableColumn>
-              </columns>
-            </TableView>
-            <TextField fx:id="txtHorasSimulacion" layoutX="584.0" layoutY="72.0" text="1000" />
+                        </TableView>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <TextField fx:id="txtHorasSimulacion" layoutX="584.0" layoutY="72.0" text="500" />
             <Label layoutX="368.0" layoutY="77.0" text="Cantidad de minutos a simular:" />
             <Button fx:id="btnSimular" layoutX="937.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#clickBtnSimular" prefHeight="66.0" prefWidth="157.0" text="Simular" />
             <Label layoutX="366.0" layoutY="112.0" text="Mostrar filas " />
             <Label layoutX="368.0" layoutY="147.0" text="Desde minuto:" />
             <Label layoutX="617.0" layoutY="147.0" text="Hasta minuto:" />
-            <TextField fx:id="txtHoraDesde" layoutX="463.0" layoutY="142.0" prefHeight="26.0" prefWidth="112.0" />
-            <TextField fx:id="txtHoraHasta" layoutX="703.0" layoutY="142.0" prefHeight="26.0" prefWidth="112.0" />
+            <TextField fx:id="txtHoraDesde" layoutX="463.0" layoutY="142.0" prefHeight="26.0" prefWidth="112.0" text="0" />
+            <TextField fx:id="txtHoraHasta" layoutX="703.0" layoutY="142.0" prefHeight="26.0" prefWidth="112.0" text="500" />
             <Button fx:id="btnClientes" layoutX="937.0" layoutY="131.0" mnemonicParsing="false" onAction="#clickBtnClientes" onMouseClicked="#clickBtnSimular" prefHeight="66.0" prefWidth="157.0" text="Clientes atendidos" />
           </children>
+         <stylesheets>
+            <URL value="@FXCSS.css" />
+            <URL value="@FXCSS.css" />
+         </stylesheets>
       </AnchorPane>
    </content>
 </ScrollPane>

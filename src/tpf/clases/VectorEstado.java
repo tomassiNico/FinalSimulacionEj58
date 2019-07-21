@@ -387,8 +387,10 @@ public class VectorEstado {
     
     private int compraron;
     private int totalCli;
+    
+    private double maxPermanencia;
 
-    public VectorEstado(double reloj, int colaSur, Surtidor s1, Surtidor s2, Surtidor s3, int colaGom, Gomeria g1, Gomeria g2, int colaAcc, VentaAccesorio a, Servicio ser, LlegadaCliente lle, int maxAcc, int maxGom, int maxSur, int compraron, int totalCli) {
+    public VectorEstado(double reloj, int colaSur, Surtidor s1, Surtidor s2, Surtidor s3, int colaGom, Gomeria g1, Gomeria g2, int colaAcc, VentaAccesorio a, Servicio ser, LlegadaCliente lle, int maxAcc, int maxGom, int maxSur, int compraron, int totalCli, double maxP) {
         this.reloj = reloj;
         this.colaSur = colaSur;
         this.colaGom = colaGom;
@@ -424,5 +426,20 @@ public class VectorEstado {
         this.rndOtSer = ser.getRndOtroServicio();
         this.otSer = ser.getOtroServicio();
         
+        this.compraron = compraron;
+        this.totalCli = totalCli;
+        
+        this.maxPermanencia = maxP;
+        
     }
+
+    public double getMaxPermanencia() {
+        return Math.round(maxPermanencia*10000.0)/10000.0;
+    }
+
+    public void setMaxPermanencia(double maxPermanencia) {
+        this.maxPermanencia = maxPermanencia;
+    }
+    
+    
 }
