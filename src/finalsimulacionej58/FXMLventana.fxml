@@ -39,7 +39,7 @@
                               <TableColumn minWidth="0.0" prefWidth="139.20001220703125" text="Otro servicio ">
                                  <columns>
                                     <TableColumn fx:id="rndOtroServicioColumn" prefWidth="70.0" text="RND" />
-                                    <TableColumn fx:id="otroServicioColumn" prefWidth="230.0" text="Accesorio/Gomeria" />
+                                    <TableColumn fx:id="otroServicioColumn" prefWidth="150.0" text="Accesorio/&#10;Gomeria" />
                                  </columns>
                               </TableColumn>
                               <TableColumn prefWidth="405.60003662109375" text="Tiempo atención servicio">
@@ -52,7 +52,7 @@
                               </TableColumn>
                               <TableColumn prefWidth="258.0" text="Surtidores Combustible(n)">
                                  <columns>
-                                    <TableColumn fx:id="colaSurColumn" minWidth="40.0" prefWidth="100.0" text="ColaSurtidores" />
+                                    <TableColumn fx:id="colaSurColumn" minWidth="40.0" prefWidth="100.0" text="Cola&#10;Surtidores" />
                                     <TableColumn prefWidth="40.79998779296875" text="1">
                                        <columns>
                                           <TableColumn fx:id="inicioSur1Column" prefWidth="75.0" text="Inicio" />
@@ -75,7 +75,7 @@
                               </TableColumn>
                               <TableColumn prefWidth="258.0" text="Empleados gomería(n)">
                                  <columns>
-                                    <TableColumn fx:id="colaGomColumn" minWidth="40.0" prefWidth="105.0" text="ColaGomeria" />
+                                    <TableColumn fx:id="colaGomColumn" minWidth="40.0" prefWidth="105.0" text="Cola&#10;Gomeria" />
                                     <TableColumn prefWidth="40.79998779296875" text="1">
                                        <columns>
                                           <TableColumn fx:id="inicioGom1Column" prefWidth="75.0" text="Inicio" />
@@ -92,7 +92,7 @@
                               </TableColumn>
                               <TableColumn prefWidth="123.1998291015625" text="Venta accesorios">
                                  <columns>
-                                    <TableColumn fx:id="colaAccColumn" prefWidth="105.0" text="ColaAccesorios" />
+                                    <TableColumn fx:id="colaAccColumn" prefWidth="105.0" text="Cola&#10;Accesorios" />
                                     <TableColumn fx:id="inicioAccColumn" minWidth="0.0" prefWidth="75.0" text="Inicio" />
                                     <TableColumn fx:id="finAccColumn" minWidth="0.0" prefWidth="75.0" text="Fin" />
                                  </columns>
@@ -108,7 +108,7 @@
                                  <columns>
                                     <TableColumn fx:id="compraClientesColumn" prefWidth="150.0" text="Compraron" />
                                     <TableColumn fx:id="totalClientesAtendidosColumn" minWidth="0.0" prefWidth="120.0" text="Total" />
-                                    <TableColumn fx:id="maxTiempoSistemaColumn" prefWidth="250.0" text="Tiempo max permanenca" />
+                                    <TableColumn fx:id="maxTiempoSistemaColumn" prefWidth="250.0" text="Tiempo &#10;maximo &#10;permanenca" />
                                  </columns>
                               </TableColumn>
                           </columns>

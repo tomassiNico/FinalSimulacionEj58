@@ -19,9 +19,12 @@ public class GestorSimulacion {
     private double mostrarDesde;
     private double mostrarHasta;
     private double tiempoSimulacion;
-    private int colaGasolinera;
-    private int colaAccesorios;
-    private int colaGomeria;
+    //private int colaGasolinera;
+    //private int colaAccesorios;
+    //private int colaGomeria;
+    private ArrayList<Cliente> colaSurtidores;
+    private ArrayList<Cliente> colaGomeria;
+    private ArrayList<Cliente> colaAccesorios;
     private LlegadaCliente llegadaCliente;
     private Servicio servicioSolicitado;
     private TiempoAtencion tiempoAtencion;
@@ -47,9 +50,9 @@ public class GestorSimulacion {
 
     public GestorSimulacion(double tiempo, double desde, double hasta) {
         this.reloj = 0;
-        this.colaGasolinera = 0;
-        this.colaAccesorios = 0;
-        this.colaGomeria = 0;
+        this.colaSurtidores = new ArrayList();
+        this.colaAccesorios = new ArrayList();
+        this.colaGomeria = new ArrayList();
         this.mostrarDesde = desde;
         this.mostrarHasta = hasta;
         this.tiempoSimulacion = tiempo;
@@ -83,39 +86,49 @@ public class GestorSimulacion {
     }
     
     public void simular(){
+        boolean b = false;
+        
         this.vectores.clear();
         this.llegadaCliente.generarProximaLlegada(reloj);
         
         while(reloj < tiempoSimulacion){
+            b = false;
             
-            this.vector = new VectorEstado(reloj, colaGasolinera, surtidor1, surtidor2, surtidor3, colaGomeria, gomero1, gomero2, colaAccesorios, accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size(), tiempoMaxCliente);
-            vectores.add(vector);
-            resetearDatos();
+            actualizarVectorEstado();
+            
             
             double proximoEvento = proximoEvento();
             this.reloj = proximoEvento;
             
             if (proximoEvento == llegadaCliente.getProximaLlegada()) {
                 simularLlegadaCliente();
+                b = true;
             }
-            
+            if (b) {
+                continue;
+            }
             for (Surtidor sur: surtidores) {
                 if (proximoEvento == sur.getFinAtencion()) {
                     simularFinGasolinera(sur);
+                    b = true;
                 }
             }
-            
+            if (b) {
+                continue;
+            }
             for (Gomeria gom: gomeros) {
                 if (proximoEvento == gom.getFinAtencion()) {
                     simularFinGomeria(gom);
+                    b = true;
                 }
             }
-            
+            if (b) {
+                continue;
+            }
             if (proximoEvento == accesorio.getFinAtencion()) {
                 simularFinAccesorio();
+                continue;
             }
-            
-            
             
         }
     }
@@ -123,6 +136,7 @@ public class GestorSimulacion {
     private void resetearDatos(){
         llegadaCliente.resetear();
         servicioSolicitado.resetear();
+        TiempoAtencion.getInstance().resetear();
     }
     
     private void simularFinAccesorio(){
@@ -134,13 +148,16 @@ public class GestorSimulacion {
         if (tiempoMaxCliente < cli.getPermanencia()) {
                     tiempoMaxCliente = cli.getPermanencia();
             }
-        if (colaAccesorios == 0) {
+        if (colaAccesorios.size() == 0) {
             accesorio.desocupar();
         }
         else{
-            colaAccesorios --;
+            Cliente siguiente = colaAccesorios.get(0);
+            colaAccesorios.remove(0);
+            
             accesorio.calcularTiempoAtencion(reloj);
             accesorio.ocupar();
+            accesorio.atenderCliente(siguiente);
         }
     }
         
@@ -151,13 +168,16 @@ public class GestorSimulacion {
         if (tiempoMaxCliente < cli.getPermanencia()) {
                     tiempoMaxCliente = cli.getPermanencia();
             }
-        if (colaGomeria == 0) {
+        if (colaGomeria.size() == 0) {
             gom.desocupar();
         }
         else{
-            colaGomeria --;
+            Cliente siguiente = colaGomeria.get(0);
+            colaGomeria.remove(0);
+            
             gom.calcularTiempoAtencion(reloj);
             gom.ocupar(); 
+            gom.atenderCliente(siguiente);
         }
     }
     
@@ -181,13 +201,26 @@ public class GestorSimulacion {
             }
         }
         
-        if (colaGasolinera == 0) {
+        actualizarVectorEstado();
+        
+        if (colaSurtidores.size() == 0) {
             sur.desocupar();
         }
         else{
-            colaGasolinera --;
+            Cliente siguiente = colaSurtidores.get(0);
+            colaSurtidores.remove(0);
+            
             sur.calcularTiempoAtencion(reloj);
             sur.ocupar();
+            sur.atenderCliente(siguiente);
+        }
+    }
+    
+    private void actualizarVectorEstado(){
+        if (reloj <= mostrarHasta && reloj >= mostrarDesde) {
+            this.vector = new VectorEstado(reloj, colaSurtidores.size(), surtidor1, surtidor2, surtidor3, colaGomeria.size(), gomero1, gomero2, colaAccesorios.size(), accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size(), tiempoMaxCliente);
+            vectores.add(vector);
+            resetearDatos();
         }
     }
     
@@ -218,9 +251,9 @@ public class GestorSimulacion {
             accesorio.atenderCliente(cli);
         }
         else{
-            colaAccesorios ++;
-            if (colaAccesorios > colaMaxAccesorio) {
-                colaMaxAccesorio = colaAccesorios;
+            colaAccesorios.add(cli);
+            if (colaAccesorios.size() > colaMaxAccesorio) {
+                colaMaxAccesorio = colaAccesorios.size();
             }
         }
     }
@@ -240,9 +273,9 @@ public class GestorSimulacion {
             gomDesocupada.atenderCliente(cli);
         }
         else{
-            colaGomeria ++;
-            if (colaGomeria > colaMaxGomeria) {
-                colaMaxGomeria = colaGomeria;
+            colaGomeria.add(cli);
+            if (colaGomeria.size() > colaMaxGomeria) {
+                colaMaxGomeria = colaGomeria.size();
             }
         }
     }
@@ -262,11 +295,17 @@ public class GestorSimulacion {
             surDesocupado.atenderCliente(cli);
         }
         else{
-            colaGasolinera ++;
-            if (colaGasolinera > colaMaxGasolinera) {
-                colaMaxGasolinera = colaGasolinera;
+            if (colaSurtidores.size() < 5) {
+                colaSurtidores.add(cli);
+                if (colaSurtidores.size() > colaMaxGasolinera) {
+                    colaMaxGasolinera = colaSurtidores.size();
+                }
+                TiempoAtencion.getInstance().resetear();
             }
-            TiempoAtencion.getInstance().resetear();
+            else{
+                cli.setFin(reloj);
+            }
+            
         }
         
     }

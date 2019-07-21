@@ -30,7 +30,7 @@ public class VectorEstado {
     private double finAt;
 
     public double getReloj() {
-        return reloj;
+        return Math.round(reloj*10000.0)/10000.0;
     }
 
     public void setReloj(double reloj) {

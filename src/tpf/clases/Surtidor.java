@@ -92,6 +92,7 @@ public class Surtidor implements SimuladorServicio{
     @Override
     public void atenderCliente(Cliente cli) {
         this.cliente = cli;
+        cli.setAtendido(true);
     }
     
 }

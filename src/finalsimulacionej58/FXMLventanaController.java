@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import tpf.clases.Cliente;
 import tpf.clases.GestorSimulacion;
+import tpf.clases.TiempoAtencion;
 import tpf.clases.VectorEstado;
 
 /**
@@ -184,6 +185,7 @@ public class FXMLventanaController implements Initializable {
 
     @FXML
     private void clickBtnSimular(MouseEvent event) {
+        TiempoAtencion.getInstance().resetear();
         simulador = new GestorSimulacion(Double.parseDouble(txtHorasSimulacion.textProperty().get()),Double.parseDouble(txtHoraDesde.textProperty().get()), Double.parseDouble(txtHoraHasta.textProperty().get()));
         simulador.simular();
         estados = simulador.getEstados();
