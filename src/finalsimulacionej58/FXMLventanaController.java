@@ -200,7 +200,16 @@ public class FXMLventanaController implements Initializable {
     }
 
     @FXML
-    private void clickBtnClientes(ActionEvent event) {
+    private void clickBtnResultado(ActionEvent event) {
+        String resumen = "Tiempo máximo de permanencia en el sistema de un cliente: " + simulador.getTiempoMaxCliente() + "\n";
+        resumen = resumen + "Porcentaje de clientes que no compraron: " + simulador.getPorcentajeNoCompraron() + "%\n";
+        resumen = resumen + "Cola máxima en gasolinera: " + simulador.getColaMaxGasolinera() + "\n";
+        resumen = resumen + "Cola máxima en gomeria: " + simulador.getColaMaxGomeria()+ "\n";
+        resumen = resumen + "Cola máxima en venta de accesorios: " + simulador.getColaMaxAccesorio()+ "\n";
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("Medidas resumen ");
+        dialog.setHeaderText(resumen);
+        dialog.showAndWait();
     }
     
 }

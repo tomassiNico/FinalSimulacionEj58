@@ -349,4 +349,25 @@ public class GestorSimulacion {
     public double getReloj(){
         return this.reloj;
     }
+
+    public double getTiempoMaxCliente() {
+        return tiempoMaxCliente;
+    }
+
+    public int getColaMaxGasolinera() {
+        return colaMaxGasolinera;
+    }
+
+    public int getColaMaxGomeria() {
+        return colaMaxGomeria;
+    }
+
+    public int getColaMaxAccesorio() {
+        return colaMaxAccesorio;
+    }
+    
+    public double getPorcentajeNoCompraron(){
+        double porc = (clientes.size() - cliConCompra) * 100.0 /clientes.size();
+        return porc;
+    }
 }
