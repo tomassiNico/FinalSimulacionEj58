@@ -24,6 +24,7 @@ public class main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLventana.fxml"));
         
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("FXCSS.css").toExternalForm());
         
         stage.setScene(scene);
         stage.show();

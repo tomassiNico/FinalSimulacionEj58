@@ -33,6 +33,7 @@ public class Surtidor implements SimuladorServicio{
         this.cliente = new Cliente(inicio);
     }
     
+    
     public void desocupar(){
         this.inicioAtencion = -1;
         this.finAtencion = -1;
@@ -91,6 +92,7 @@ public class Surtidor implements SimuladorServicio{
     @Override
     public void atenderCliente(Cliente cli) {
         this.cliente = cli;
+        cli.setAtendido(true);
     }
     
 }

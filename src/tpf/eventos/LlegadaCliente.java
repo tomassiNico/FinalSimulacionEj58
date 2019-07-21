@@ -30,6 +30,12 @@ public class LlegadaCliente implements Evento{
         // para el generador de distr normal
         this.generadorNormal = new Normal((24.0/60.0), (23.0/60.0));
     }
+    
+    public void resetear(){
+        this.rndLlegada1 = -1;
+        this.rndLlegada2 = -1;
+        this.tiempoLlegada = -1;
+    }
 
     public double getRndLlegada1() {
         return Math.round(rndLlegada1*100.0)/100.0;

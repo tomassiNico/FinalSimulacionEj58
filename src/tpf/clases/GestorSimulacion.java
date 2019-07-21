@@ -6,6 +6,8 @@
 package tpf.clases;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tpf.eventos.LlegadaCliente;
 
 /**
@@ -17,9 +19,12 @@ public class GestorSimulacion {
     private double mostrarDesde;
     private double mostrarHasta;
     private double tiempoSimulacion;
-    private int colaGasolinera;
-    private int colaAccesorios;
-    private int colaGomeria;
+    //private int colaGasolinera;
+    //private int colaAccesorios;
+    //private int colaGomeria;
+    private ArrayList<Cliente> colaSurtidores;
+    private ArrayList<Cliente> colaGomeria;
+    private ArrayList<Cliente> colaAccesorios;
     private LlegadaCliente llegadaCliente;
     private Servicio servicioSolicitado;
     private TiempoAtencion tiempoAtencion;
@@ -31,13 +36,13 @@ public class GestorSimulacion {
     private Gomeria  gomero2;
     private ArrayList<Gomeria> gomeros;
     private VentaAccesorio accesorio;
-    private ArrayList<Cliente> clientes;
+    private ObservableList<Cliente> clientes;
     private VectorEstado vector;
-    private ArrayList<VectorEstado> vectores;
+    private ObservableList<VectorEstado> vectores;
     
     
     private double tiempoMaxCliente;
-    private double porcentajeCliNoCompra;
+    private int cliConCompra;
     private int colaMaxGasolinera;
     private int colaMaxGomeria;
     private int colaMaxAccesorio;
@@ -45,9 +50,9 @@ public class GestorSimulacion {
 
     public GestorSimulacion(double tiempo, double desde, double hasta) {
         this.reloj = 0;
-        this.colaGasolinera = 0;
-        this.colaAccesorios = 0;
-        this.colaGomeria = 0;
+        this.colaSurtidores = new ArrayList();
+        this.colaAccesorios = new ArrayList();
+        this.colaGomeria = new ArrayList();
         this.mostrarDesde = desde;
         this.mostrarHasta = hasta;
         this.tiempoSimulacion = tiempo;
@@ -67,65 +72,119 @@ public class GestorSimulacion {
         this.gomeros.add(gomero1);
         this.gomeros.add(gomero2);
         this.accesorio = new VentaAccesorio();
-        this.clientes = new ArrayList();
-        this.vector = new VectorEstado();
-        this.vectores = new ArrayList();
+        this.clientes = FXCollections.observableArrayList();
+        this.vectores = FXCollections.observableArrayList();
         this.tiempoMaxCliente = 0;
-        this.porcentajeCliNoCompra = 0;
+        this.cliConCompra = 0;
         this.colaMaxAccesorio = 0;
         this.colaMaxGasolinera = 0;
         this.colaMaxGomeria = 0;
     }
     
+    public ObservableList<VectorEstado> getEstados(){
+        return this.vectores;
+    }
+    
     public void simular(){
+        boolean b = false;
+        
+        this.vectores.clear();
         this.llegadaCliente.generarProximaLlegada(reloj);
         
         while(reloj < tiempoSimulacion){
+            b = false;
+            
+            actualizarVectorEstado();
+            
+            
             double proximoEvento = proximoEvento();
+            this.reloj = proximoEvento;
             
             if (proximoEvento == llegadaCliente.getProximaLlegada()) {
                 simularLlegadaCliente();
+                b = true;
             }
-            
+            if (b) {
+                continue;
+            }
             for (Surtidor sur: surtidores) {
                 if (proximoEvento == sur.getFinAtencion()) {
                     simularFinGasolinera(sur);
+                    b = true;
                 }
             }
-            
+            if (b) {
+                continue;
+            }
             for (Gomeria gom: gomeros) {
                 if (proximoEvento == gom.getFinAtencion()) {
                     simularFinGomeria(gom);
+                    b = true;
                 }
             }
-            
+            if (b) {
+                continue;
+            }
             if (proximoEvento == accesorio.getFinAtencion()) {
                 simularFinAccesorio();
+                continue;
             }
             
-            
-            this.reloj = proximoEvento;
         }
+    }
+    
+    private void resetearDatos(){
+        llegadaCliente.resetear();
+        servicioSolicitado.resetear();
+        TiempoAtencion.getInstance().resetear();
     }
     
     private void simularFinAccesorio(){
-        
+        Cliente cli = accesorio.getCliente();
+        cli.salirSistema(reloj);
+        cli.comprar();
+        cliConCompra ++;
+        accesorio.desocupar();
+        if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+            }
+        if (colaAccesorios.size() == 0) {
+            accesorio.desocupar();
+        }
+        else{
+            Cliente siguiente = colaAccesorios.get(0);
+            colaAccesorios.remove(0);
+            
+            accesorio.calcularTiempoAtencion(reloj);
+            accesorio.ocupar();
+            accesorio.atenderCliente(siguiente);
+        }
     }
-    
+        
     private void simularFinGomeria(Gomeria gom){
-        if (colaGomeria == 0) {
+        Cliente cli = gom.getCliente();
+        cli.salirSistema(reloj);
+        gom.desocupar();
+        if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+            }
+        if (colaGomeria.size() == 0) {
             gom.desocupar();
         }
         else{
-            colaGomeria --;
+            Cliente siguiente = colaGomeria.get(0);
+            colaGomeria.remove(0);
+            
             gom.calcularTiempoAtencion(reloj);
-            gom.ocupar();
+            gom.ocupar(); 
+            gom.atenderCliente(siguiente);
         }
     }
     
     private void simularFinGasolinera(Surtidor sur){
         servicioSolicitado.servicioPosGasolinera();
         Cliente cli = sur.getCliente();
+        sur.desocupar();
 
         if (servicioSolicitado.getOtroServicio() == "Gomeria") {
             simularLlegadaGomeria(cli);
@@ -135,17 +194,33 @@ public class GestorSimulacion {
                 simularLlegadaAccesorio(cli);
             }
             else{
-                cli.setFin(reloj);
+                cli.salirSistema(reloj);
+                if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+                }
             }
         }
         
-        if (colaGasolinera == 0) {
+        actualizarVectorEstado();
+        
+        if (colaSurtidores.size() == 0) {
             sur.desocupar();
         }
         else{
-            colaGasolinera --;
+            Cliente siguiente = colaSurtidores.get(0);
+            colaSurtidores.remove(0);
+            
             sur.calcularTiempoAtencion(reloj);
             sur.ocupar();
+            sur.atenderCliente(siguiente);
+        }
+    }
+    
+    private void actualizarVectorEstado(){
+        if (reloj <= mostrarHasta && reloj >= mostrarDesde) {
+            this.vector = new VectorEstado(reloj, colaSurtidores.size(), surtidor1, surtidor2, surtidor3, colaGomeria.size(), gomero1, gomero2, colaAccesorios.size(), accesorio, servicioSolicitado, llegadaCliente, colaMaxAccesorio, colaMaxGomeria, colaMaxGasolinera, cliConCompra, clientes.size(), tiempoMaxCliente);
+            vectores.add(vector);
+            resetearDatos();
         }
     }
     
@@ -165,6 +240,8 @@ public class GestorSimulacion {
                 simularLlegadaAccesorio(cli);
             }
         }
+        
+        this.llegadaCliente.generarProximaLlegada(reloj);
     }
     
     private void simularLlegadaAccesorio(Cliente cli){
@@ -174,9 +251,9 @@ public class GestorSimulacion {
             accesorio.atenderCliente(cli);
         }
         else{
-            colaAccesorios ++;
-            if (colaAccesorios > colaMaxAccesorio) {
-                colaMaxAccesorio = colaAccesorios;
+            colaAccesorios.add(cli);
+            if (colaAccesorios.size() > colaMaxAccesorio) {
+                colaMaxAccesorio = colaAccesorios.size();
             }
         }
     }
@@ -196,9 +273,9 @@ public class GestorSimulacion {
             gomDesocupada.atenderCliente(cli);
         }
         else{
-            colaGomeria ++;
-            if (colaGomeria > colaMaxGomeria) {
-                colaMaxGomeria = colaGomeria;
+            colaGomeria.add(cli);
+            if (colaGomeria.size() > colaMaxGomeria) {
+                colaMaxGomeria = colaGomeria.size();
             }
         }
     }
@@ -218,10 +295,17 @@ public class GestorSimulacion {
             surDesocupado.atenderCliente(cli);
         }
         else{
-            colaGasolinera ++;
-            if (colaGasolinera > colaMaxGasolinera) {
-                colaMaxGasolinera = colaGasolinera;
+            if (colaSurtidores.size() < 5) {
+                colaSurtidores.add(cli);
+                if (colaSurtidores.size() > colaMaxGasolinera) {
+                    colaMaxGasolinera = colaSurtidores.size();
+                }
+                TiempoAtencion.getInstance().resetear();
             }
+            else{
+                cli.setFin(reloj);
+            }
+            
         }
         
     }
@@ -258,9 +342,32 @@ public class GestorSimulacion {
         }
     }
     
-    public ArrayList historiaSimulacion(){
-        return this.vectores;
+    public ObservableList<Cliente> getClientes(){
+        return this.clientes;
     }
     
+    public double getReloj(){
+        return this.reloj;
+    }
+
+    public double getTiempoMaxCliente() {
+        return tiempoMaxCliente;
+    }
+
+    public int getColaMaxGasolinera() {
+        return colaMaxGasolinera;
+    }
+
+    public int getColaMaxGomeria() {
+        return colaMaxGomeria;
+    }
+
+    public int getColaMaxAccesorio() {
+        return colaMaxAccesorio;
+    }
     
+    public double getPorcentajeNoCompraron(){
+        double porc = (clientes.size() - cliConCompra) * 100.0 /clientes.size();
+        return porc;
+    }
 }

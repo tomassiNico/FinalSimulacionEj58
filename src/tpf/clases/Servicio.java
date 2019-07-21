@@ -26,6 +26,13 @@ public class Servicio {
        this.rndOtroServicio = -1;
        this.otroServicio = "";
     }
+    
+    public void resetear(){
+       this.esGasolina= false;
+       this.rndGasolinera = -1;
+       this.rndOtroServicio = -1;
+       this.otroServicio = "";
+    }
 
     public double getRndGasolinera() {
         return rndGasolinera;
