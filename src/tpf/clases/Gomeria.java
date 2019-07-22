@@ -95,5 +95,11 @@ public class Gomeria implements SimuladorServicio{
         this.cliente = cli;
         cli.setAtendido(true);
     }
-    
+
+    public String getClienteAtencion(){
+        if (cliente == null) {
+            return "";
+        }
+        return String.valueOf(cliente.getNumCliente());
+    }
 }

@@ -125,6 +125,18 @@ public class FXMLventanaController implements Initializable {
     private TableColumn<Cliente, Double> finCliColumn;
     @FXML
     private TableColumn<Cliente, Double> tiempoPermanenciaColumn;
+    @FXML
+    private TableColumn<VectorEstado, String> cliSur1Column;
+    @FXML
+    private TableColumn<VectorEstado, String> cliSur2Column;
+    @FXML
+    private TableColumn<VectorEstado, String> cliSur3Column;
+    @FXML
+    private TableColumn<VectorEstado, String> cliGom1Column;
+    @FXML
+    private TableColumn<VectorEstado, String> cliGom2Column;
+    @FXML
+    private TableColumn<VectorEstado, String> cliAccColumn;
     
     /**
      * Initializes the controller class.
@@ -181,6 +193,14 @@ public class FXMLventanaController implements Initializable {
         this.inicioCliColumn.setCellValueFactory(new PropertyValueFactory("inicio"));
         this.finCliColumn.setCellValueFactory(new PropertyValueFactory("fin"));
         this.tiempoPermanenciaColumn.setCellValueFactory(new PropertyValueFactory("permanencia"));
+        
+        this.cliSur1Column.setCellValueFactory(new PropertyValueFactory("cliSur1"));
+        this.cliSur2Column.setCellValueFactory(new PropertyValueFactory("cliSur2"));
+        this.cliSur3Column.setCellValueFactory(new PropertyValueFactory("cliSur3"));
+        this.cliGom1Column.setCellValueFactory(new PropertyValueFactory("cliGom1"));
+        this.cliGom2Column.setCellValueFactory(new PropertyValueFactory("cliGom2"));
+        this.cliAccColumn.setCellValueFactory(new PropertyValueFactory("cliAcc"));
+        
     }    
 
     @FXML

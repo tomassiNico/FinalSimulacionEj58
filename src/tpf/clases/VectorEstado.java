@@ -29,6 +29,99 @@ public class VectorEstado {
     private double tiemAt;
     private double finAt;
 
+    private String ser;
+    
+    private int colaSur;
+    private double inSur1;
+    private double finSur1;
+    private double inSur2;
+    private double finSur2;
+    private double inSur3;
+    private double finSur3;
+    
+    private int colaGom;
+    private double inGom1;
+    private double finGom1;
+    private double inGom2;
+    private double finGom2;
+
+    private int colaAcc;
+    private double inAcc;
+    private double finAcc;
+    
+    private int maxAcc;
+    private int maxGom;
+    private int maxSur;
+    
+    private int compraron;
+    private int totalCli;
+    
+    private double maxPermanencia;
+    
+    private String cliSur1;
+    private String cliSur2;
+    private String cliSur3;
+    private String cliGom1;
+    private String cliGom2;
+    private String cliAcc;
+
+    public VectorEstado(double reloj, int colaSur, Surtidor s1, Surtidor s2, Surtidor s3, int colaGom, Gomeria g1, Gomeria g2, int colaAcc, VentaAccesorio a, Servicio ser, LlegadaCliente lle, int maxAcc, int maxGom, int maxSur, int compraron, int totalCli, double maxP) {
+        this.reloj = reloj;
+        this.colaSur = colaSur;
+        this.colaGom = colaGom;
+        this.colaAcc = colaAcc;
+        this.maxAcc = maxAcc;
+        this.maxGom = maxGom;
+        this.maxSur = maxSur;
+        this.compraron = compraron;
+        this.totalCli = totalCli;
+        this.inAcc = a.getInicioAtencion();
+        this.inGom1 = g1.getInicioAtencion();
+        this.inGom2 = g2.getInicioAtencion();
+        this.inSur1 = s1.getInicioAtencion();
+        this.inSur2 = s2.getInicioAtencion();
+        this.inSur3 = s3.getInicioAtencion();
+        this.finAcc = a.getFinAtencion();
+        this.finGom1 = g1.getFinAtencion();
+        this.finGom2 = g2.getFinAtencion();
+        this.finSur1 = s1.getFinAtencion();
+        this.finSur2 = s2.getFinAtencion();
+        this.finSur3 = s3.getFinAtencion();
+        this.finAt = TiempoAtencion.getInstance().getFinAtencion();
+        this.tiemAt = TiempoAtencion.getInstance().getTiempoAtencion();
+        this.rndTiAt = TiempoAtencion.getInstance().getRnd();
+        this.ser = TiempoAtencion.getInstance().getServicio();
+        this.rnd1Ll = lle.getRndLlegada1();
+        this.rnd2Ll = lle.getRndLlegada2();
+        this.tiempoLl = lle.getTiempoLlegada();
+        this.proxLl = lle.getProximaLlegada();
+        
+        this.rndSer = ser.getRndGasolinera();
+        this.gasolina = ser.esGasolina();
+        this.rndOtSer = ser.getRndOtroServicio();
+        this.otSer = ser.getOtroServicio();
+        
+        this.compraron = compraron;
+        this.totalCli = totalCli;
+        
+        this.maxPermanencia = maxP;
+        
+        this.cliAcc = a.getClienteAtencion();
+        this.cliSur1 = s1.getClienteAtencion();
+        this.cliSur2 = s2.getClienteAtencion();
+        this.cliSur3 = s3.getClienteAtencion();
+        this.cliGom1 = g1.getClienteAtencion();
+        this.cliGom2 = g2.getClienteAtencion();
+    }
+
+    public double getMaxPermanencia() {
+        return Math.round(maxPermanencia*10000.0)/10000.0;
+    }
+
+    public void setMaxPermanencia(double maxPermanencia) {
+        this.maxPermanencia = maxPermanencia;
+    }
+    
     public double getReloj() {
         return Math.round(reloj*10000.0)/10000.0;
     }
@@ -360,86 +453,53 @@ public class VectorEstado {
 
     public void setTotalCli(int totalCli) {
         this.totalCli = totalCli;
-    }
-    private String ser;
-    
-    private int colaSur;
-    private double inSur1;
-    private double finSur1;
-    private double inSur2;
-    private double finSur2;
-    private double inSur3;
-    private double finSur3;
-    
-    private int colaGom;
-    private double inGom1;
-    private double finGom1;
-    private double inGom2;
-    private double finGom2;
+    }   
 
-    private int colaAcc;
-    private double inAcc;
-    private double finAcc;
-    
-    private int maxAcc;
-    private int maxGom;
-    private int maxSur;
-    
-    private int compraron;
-    private int totalCli;
-    
-    private double maxPermanencia;
-
-    public VectorEstado(double reloj, int colaSur, Surtidor s1, Surtidor s2, Surtidor s3, int colaGom, Gomeria g1, Gomeria g2, int colaAcc, VentaAccesorio a, Servicio ser, LlegadaCliente lle, int maxAcc, int maxGom, int maxSur, int compraron, int totalCli, double maxP) {
-        this.reloj = reloj;
-        this.colaSur = colaSur;
-        this.colaGom = colaGom;
-        this.colaAcc = colaAcc;
-        this.maxAcc = maxAcc;
-        this.maxGom = maxGom;
-        this.maxSur = maxSur;
-        this.compraron = compraron;
-        this.totalCli = totalCli;
-        this.inAcc = a.getInicioAtencion();
-        this.inGom1 = g1.getInicioAtencion();
-        this.inGom2 = g2.getInicioAtencion();
-        this.inSur1 = s1.getInicioAtencion();
-        this.inSur2 = s2.getInicioAtencion();
-        this.inSur3 = s3.getInicioAtencion();
-        this.finAcc = a.getFinAtencion();
-        this.finGom1 = g1.getFinAtencion();
-        this.finGom2 = g2.getFinAtencion();
-        this.finSur1 = s1.getFinAtencion();
-        this.finSur2 = s2.getFinAtencion();
-        this.finSur3 = s3.getFinAtencion();
-        this.finAt = TiempoAtencion.getInstance().getFinAtencion();
-        this.tiemAt = TiempoAtencion.getInstance().getTiempoAtencion();
-        this.rndTiAt = TiempoAtencion.getInstance().getRnd();
-        this.ser = TiempoAtencion.getInstance().getServicio();
-        this.rnd1Ll = lle.getRndLlegada1();
-        this.rnd2Ll = lle.getRndLlegada2();
-        this.tiempoLl = lle.getTiempoLlegada();
-        this.proxLl = lle.getProximaLlegada();
-        
-        this.rndSer = ser.getRndGasolinera();
-        this.gasolina = ser.esGasolina();
-        this.rndOtSer = ser.getRndOtroServicio();
-        this.otSer = ser.getOtroServicio();
-        
-        this.compraron = compraron;
-        this.totalCli = totalCli;
-        
-        this.maxPermanencia = maxP;
-        
+    public String getCliSur1() {
+        return cliSur1;
     }
 
-    public double getMaxPermanencia() {
-        return Math.round(maxPermanencia*10000.0)/10000.0;
+    public void setCliSur1(String cliSur1) {
+        this.cliSur1 = cliSur1;
     }
 
-    public void setMaxPermanencia(double maxPermanencia) {
-        this.maxPermanencia = maxPermanencia;
+    public String getCliSur2() {
+        return cliSur2;
     }
-    
-    
+
+    public void setCliSur2(String cliSur2) {
+        this.cliSur2 = cliSur2;
+    }
+
+    public String getCliSur3() {
+        return cliSur3;
+    }
+
+    public void setCliSur3(String cliSur3) {
+        this.cliSur3 = cliSur3;
+    }
+
+    public String getCliGom1() {
+        return cliGom1;
+    }
+
+    public void setCliGom1(String cliGom1) {
+        this.cliGom1 = cliGom1;
+    }
+
+    public String getCliGom2() {
+        return cliGom2;
+    }
+
+    public void setCliGom2(String cliGom2) {
+        this.cliGom2 = cliGom2;
+    }
+
+    public String getCliAcc() {
+        return cliAcc;
+    }
+
+    public void setCliAcc(String cliAcc) {
+        this.cliAcc = cliAcc;
+    }
 }

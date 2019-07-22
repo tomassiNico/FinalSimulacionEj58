@@ -95,4 +95,10 @@ public class Surtidor implements SimuladorServicio{
         cli.setAtendido(true);
     }
     
+    public String getClienteAtencion(){
+        if (cliente == null) {
+            return "";
+        }
+        return String.valueOf(cliente.getNumCliente());
+    }
 }
