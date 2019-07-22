@@ -205,18 +205,20 @@ public class FXMLventanaController implements Initializable {
 
     @FXML
     private void clickBtnSimular(MouseEvent event) {
-        TiempoAtencion.getInstance().resetear();
-        simulador = new GestorSimulacion(Double.parseDouble(txtHorasSimulacion.textProperty().get()),Double.parseDouble(txtHoraDesde.textProperty().get()), Double.parseDouble(txtHoraHasta.textProperty().get()));
-        simulador.simular();
-        estados = simulador.getEstados();
-        clientes = simulador.getClientes();
-        
-        tableVectorEstado.setItems(estados);
-        tableClientes.setItems(clientes);
-           Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-           dialog.setTitle("Éxito");
-           dialog.setHeaderText("Simulacion");
-           dialog.showAndWait();
+        if (validarDatos()) {
+            TiempoAtencion.getInstance().resetear();
+            simulador = new GestorSimulacion(Double.parseDouble(txtHorasSimulacion.textProperty().get()),Double.parseDouble(txtHoraDesde.textProperty().get()), Double.parseDouble(txtHoraHasta.textProperty().get()));
+            simulador.simular();
+            estados = simulador.getEstados();
+            clientes = simulador.getClientes();
+
+            tableVectorEstado.setItems(estados);
+            tableClientes.setItems(clientes);
+               Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+               dialog.setTitle("Éxito");
+               dialog.setHeaderText("Simulacion");
+               dialog.showAndWait();
+        }
     }
 
     @FXML
@@ -232,4 +234,37 @@ public class FXMLventanaController implements Initializable {
         dialog.showAndWait();
     }
     
+    private boolean validarDatos(){
+        
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("ERROR");
+        double horasSimulacion;
+        double horaDesde ;
+        double horaHasta;
+        
+        try{
+            horasSimulacion = Double.parseDouble(txtHorasSimulacion.textProperty().get());
+            horaDesde = Double.parseDouble(txtHoraDesde.textProperty().get());
+            horaHasta = Double.parseDouble(txtHoraHasta.textProperty().get());
+        }
+        catch (NumberFormatException e){
+            dialog.setHeaderText("Debe cargar números");
+            dialog.showAndWait();
+            return false;
+        }
+        
+        if (horasSimulacion < 0 || horaDesde < 0 || horaHasta < 0) {
+            dialog.setHeaderText("Los números deben ser superiores a 0");
+            dialog.showAndWait();
+            return false;
+        }
+        
+        if (horaDesde >= horaHasta) {
+            dialog.setHeaderText("Intervalo invalido");
+            dialog.showAndWait();
+            return false;
+        }
+
+        return true;
+    }
 }
