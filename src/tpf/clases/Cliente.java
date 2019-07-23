@@ -40,6 +40,7 @@ public class Cliente {
     public int getNumCliente() {
         return numCliente;
     }
+    
 
     public double getPermanencia() {
         return Math.round(permanencia*10000.0)/10000.0;
@@ -50,8 +51,11 @@ public class Cliente {
         return Math.round(inicio*10000.0)/10000.0;
     }
 
-    public double getFin() {
-        return Math.round(fin*10000.0)/10000.0;
+    public String getFin() {
+        if (fin == -1) {
+            return "";
+        }
+        return String.valueOf(Math.round(fin*10000.0)/10000.0);
     }
     
     public void salirSistema(double reloj){

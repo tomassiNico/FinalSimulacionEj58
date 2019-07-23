@@ -145,9 +145,7 @@ public class GestorSimulacion {
         cli.comprar();
         cliConCompra ++;
         accesorio.desocupar();
-        if (tiempoMaxCliente < cli.getPermanencia()) {
-                    tiempoMaxCliente = cli.getPermanencia();
-            }
+        tiempoMaxCliente(cli);
         if (colaAccesorios.size() == 0) {
             accesorio.desocupar();
         }
@@ -160,14 +158,18 @@ public class GestorSimulacion {
             accesorio.atenderCliente(siguiente);
         }
     }
+    
+    private void tiempoMaxCliente(Cliente cli){
+        if (tiempoMaxCliente < cli.getPermanencia()) {
+                    tiempoMaxCliente = cli.getPermanencia();
+        }
+    }
         
     private void simularFinGomeria(Gomeria gom){
         Cliente cli = gom.getCliente();
         cli.salirSistema(reloj);
         gom.desocupar();
-        if (tiempoMaxCliente < cli.getPermanencia()) {
-                    tiempoMaxCliente = cli.getPermanencia();
-            }
+        tiempoMaxCliente(cli);
         if (colaGomeria.size() == 0) {
             gom.desocupar();
         }
@@ -195,9 +197,7 @@ public class GestorSimulacion {
             }
             else{
                 cli.salirSistema(reloj);
-                if (tiempoMaxCliente < cli.getPermanencia()) {
-                    tiempoMaxCliente = cli.getPermanencia();
-                }
+                tiempoMaxCliente(cli);
             }
         }
         
@@ -303,7 +303,7 @@ public class GestorSimulacion {
                 TiempoAtencion.getInstance().resetear();
             }
             else{
-                cli.setFin(reloj);
+                cli.salirSistema(reloj);
             }
             
         }
@@ -333,13 +333,8 @@ public class GestorSimulacion {
     }
     
     private void finalizarAtencionCliente(Cliente cli){
-        cli.setFin(reloj);
-        
-        double tiempoPermanencia = cli.getFin() - cli.getInicio(); 
-        
-        if (tiempoMaxCliente < tiempoPermanencia) {
-            tiempoMaxCliente = tiempoPermanencia;
-        }
+        cli.salirSistema(reloj);
+        tiempoMaxCliente(cli);
     }
     
     public ObservableList<Cliente> getClientes(){
@@ -368,6 +363,7 @@ public class GestorSimulacion {
     
     public double getPorcentajeNoCompraron(){
         double porc = (clientes.size() - cliConCompra) * 100.0 /clientes.size();
+        porc = Math.round(porc*1000.0)/1000.0;
         return porc;
     }
 }

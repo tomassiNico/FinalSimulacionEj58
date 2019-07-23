@@ -62,8 +62,8 @@ public class Gomeria implements SimuladorServicio{
         
         Random generadorRnd = new Random();
         double rnd = generadorRnd.nextDouble();
-        double inf = 3.0/4.0;
-        double sup = 11.0/12.0;
+        double inf = 10.0;
+        double sup = 26.0;
         Uniforme distUni = new Uniforme(inf, sup);
         double tiempoAtencion = distUni.generarNumero(rnd);
         this.inicioAtencion = reloj;

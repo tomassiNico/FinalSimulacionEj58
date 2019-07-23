@@ -63,8 +63,9 @@ public class Surtidor implements SimuladorServicio{
         
         Random generadorRnd = new Random();
         double rnd = generadorRnd.nextDouble();
-        
-        Uniforme distUni = new Uniforme(10.0, 26.0);
+        double inf = 45.0/60.0;
+        double sup = 55.0/60.0;
+        Uniforme distUni = new Uniforme(inf, sup);
         double tiempoAtencion = distUni.generarNumero(rnd);
         this.inicioAtencion = reloj;
         this.finAtencion =  reloj + tiempoAtencion;
